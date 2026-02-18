@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useJobs } from './hooks/useJobs'
 import JobCard from './components/JobCard';
+import './index.css';
 
 const email = import.meta.env.VITE_MY_EMAIL;
 

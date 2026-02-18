@@ -1,9 +1,10 @@
 import { useState, useCallback } from 'react';
-import { getCandidateByEmail } from '../services/api';
-import type { Candidate } from '../types';
+import { getCandidateByEmail, getJobs } from '../services/api';
+import type { Candidate, Job } from '../types';
 
 export function useJobs() {
   const [candidate, setCandidate] = useState<Candidate | null>(null);
+  const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,10 +21,25 @@ export function useJobs() {
     }
   }, []);
 
+  const fetchJobs = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await getJobs();
+      setJobs(data as Job[]);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error desconocido');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   return {
     candidate,
+    jobs,
     loading,
     error,
-    fetchCandidate
+    fetchCandidate,
+    fetchJobs
   };
 }

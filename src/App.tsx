@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useJobs } from './hooks/useJobs';
+import { useJobs } from './hooks/useJobs'
 
 const email = import.meta.env.VITE_MY_EMAIL;
 

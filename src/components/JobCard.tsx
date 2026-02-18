@@ -43,6 +43,9 @@ const JobCard: React.FC<JobCardProps> = ({ title, jobId }) => {
 
   return (
     <div style={{
+        display: 'flex', 
+        flexDirection: 'column',
+        alignItems: 'stretch',
       border: '1px solid #e0e0e0',
       borderRadius: '8px',
       padding: '16px',
@@ -60,7 +63,7 @@ const JobCard: React.FC<JobCardProps> = ({ title, jobId }) => {
             placeholder="https://github.com/user/repository"
             style={{
               width: '100%',
-              padding: '10px',
+              padding: '5px',
               border: `2px solid ${error ? '#f44336' : '#ddd'}`,
               borderRadius: '6px',
               fontSize: '14px',

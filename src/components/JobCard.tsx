@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 interface JobCardProps {
   title: string;
@@ -106,3 +106,4 @@ const JobCard: React.FC<JobCardProps> = ({ title, jobId }) => {
 };
 
 export default JobCard;
+

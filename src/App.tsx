@@ -63,7 +63,7 @@ function App() {
       )}
 
       <h2 style={{ marginBottom: '20px' }}>
-        Posiciones Disponibles ({jobs.length})
+        Jobs available ({jobs.length})
       </h2>
 
   <div style={{ 

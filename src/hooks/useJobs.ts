@@ -7,7 +7,7 @@ export function useJobs() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  
   const fetchCandidate = useCallback(async (email: string) => {
     setLoading(true);
     setError(null);

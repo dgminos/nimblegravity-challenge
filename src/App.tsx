@@ -5,7 +5,7 @@ import JobCard from './components/JobCard';
 const email = import.meta.env.VITE_MY_EMAIL;
 
 function App() {
-  const { candidate, jobs, loading, error, fetchCandidate, fetchJobs } = useJobs();
+  const { jobs, loading, error, fetchCandidate, fetchJobs } = useJobs();
 
   useEffect(() => {
     const init = async () => {
@@ -23,7 +23,7 @@ function App() {
         alignItems: 'center', 
         height: '100vh' 
       }}>
-        <p>Cargando aplicación...</p>
+        <h3>Loading...</h3>
       </div>
     );
   }
@@ -46,22 +46,6 @@ function App() {
           {error}
         </div>
       )}
-
-      {candidate && (
-        <div style={{ 
-          background: '#e3f2fd',
-          padding: '20px',
-          borderRadius: '8px',
-          marginBottom: '30px',
-          border: '1px solid #bbdefb'
-        }}>
-          <h2 style={{ marginBottom: '10px' }}>
-            {candidate.firstName} {candidate.lastName}
-          </h2>
-          <p style={{ color: '#1976d2' }}>{candidate.email}</p>
-        </div>
-      )}
-
       <h2 style={{ marginBottom: '20px' }}>
         Jobs available ({jobs.length})
       </h2>
@@ -84,4 +68,3 @@ function App() {
 }
 
 export default App;
-

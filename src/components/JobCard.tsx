@@ -22,6 +22,7 @@ const JobCard: React.FC<JobCardProps> = ({ title, jobId }) => {
       transition: 'box-shadow 0.2s'
     }}>
       <h3 style={{ margin: '0 0 8px 0', fontSize: '18px' }}>{title}</h3>
+      <p style={{ color: '#666', fontSize: '14px' }}>ID: {jobId}</p>
       <form onSubmit={handleSubmit}>
         <input
           type="url"

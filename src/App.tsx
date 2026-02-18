@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useJobs } from './hooks/useJobs'
+import JobCard from './components/JobCard';
 
 const email = import.meta.env.VITE_MY_EMAIL;
 
@@ -65,23 +66,19 @@ function App() {
         Posiciones Disponibles ({jobs.length})
       </h2>
 
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-        gap: '20px'
-      }}>
-        {jobs.map(job => (
-          <div key={job.id} style={{
-            border: '1px solid #ddd',
-            borderRadius: '8px',
-            padding: '16px',
-            background: 'white'
-          }}>
-            <h3 style={{ marginBottom: '8px' }}>{job.title}</h3>
-            <p style={{ color: '#666', fontSize: '14px' }}>ID: {job.id}</p>
-          </div>
-        ))}
-      </div>
+  <div style={{ 
+  display: 'grid', 
+  gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
+  gap: '20px'
+}}>
+  {jobs.map(job => (
+    <JobCard
+      key={job.id}
+      jobId={job.id}
+      title={job.title}
+    />  
+  ))}
+</div>
     </div>
   );
 }

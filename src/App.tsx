@@ -6,7 +6,7 @@ import './index.css';
 const email = import.meta.env.VITE_MY_EMAIL;
 
 function App() {
-  const { jobs, loading, error, fetchCandidate, fetchJobs } = useJobs();
+  const { jobs, loading, error, fetchCandidate, fetchJobs, submitApplication, submittingId } = useJobs();
 
   useEffect(() => {
     const init = async () => {
@@ -61,6 +61,8 @@ function App() {
       key={job.id}
       jobId={job.id}
       title={job.title}
+      submitApplication={submitApplication}
+      submitting={submittingId === job.id}
     />  
   ))}
 </div>

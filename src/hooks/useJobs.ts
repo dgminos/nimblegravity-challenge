@@ -46,6 +46,7 @@ export function useJobs() {
         uuid: candidate.uuid,
         jobId,
         candidateId: candidate.candidateId,
+        applicationId: candidate.applicationId,
         repoUrl,
       });
       return result;

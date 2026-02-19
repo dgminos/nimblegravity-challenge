@@ -1,22 +1,27 @@
 import { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 
 interface JobCardProps {
   title: string;
   jobId: string;
+  submitApplication: (jobId: string, repoUrl: string) => Promise<unknown>;
+  submitting: boolean;
 }
 
-const JobCard: React.FC<JobCardProps> = ({ title, jobId }) => {
+const JobCard = ({ title, jobId, submitApplication, submitting }: JobCardProps) => {
   const [repoUrl, setRepoUrl] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const validateGithubUrl = (url: string): boolean => {
-   // Pattern for GitHub URLs: https://github.com/user/repository
+    // Pattern for GitHub URLs: https://github.com/user/repository
     const pattern = /^https:\/\/github\.com\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_.-]+$/;
     return pattern.test(url.trim());
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setSuccess('');
     
     // Validate that it is not empty
     if (!repoUrl.trim()) {
@@ -32,13 +37,19 @@ const JobCard: React.FC<JobCardProps> = ({ title, jobId }) => {
 
     // If it passes validations
     setError('');
-    console.log('Valid URL! Applying to:', jobId);
+    try {
+      await submitApplication(jobId, repoUrl.trim());
+      setSuccess('Application submitted successfully');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unknown error');
+    }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setRepoUrl(e.target.value);
     // Clear error when the user starts typing
     if (error) setError('');
+    if (success) setSuccess('');
   };
 
   return (
@@ -86,27 +97,44 @@ const JobCard: React.FC<JobCardProps> = ({ title, jobId }) => {
         </div>
         <button
           type="submit"
+          disabled={submitting}
           style={{
             width: '100%',
             padding: '12px',
-            background: '#1976d2',
+            background: submitting ? '#9e9e9e' : '#1976d2',
             color: 'white',
             border: 'none',
             borderRadius: '6px',
-            cursor: 'pointer',
+            cursor: submitting ? 'not-allowed' : 'pointer',
             fontSize: '14px',
             fontWeight: '500',
             transition: 'background 0.2s'
           }}
-          onMouseEnter={(e) => e.currentTarget.style.background = '#1565c0'}
-          onMouseLeave={(e) => e.currentTarget.style.background = '#1976d2'}
+          onMouseEnter={(e) => {
+            if (!submitting) e.currentTarget.style.background = '#1565c0';
+          }}
+          onMouseLeave={(e) => {
+            if (!submitting) e.currentTarget.style.background = '#1976d2';
+          }}
         >
-          Apply
+          {submitting ? 'Submitting...' : 'Apply'}
         </button>
+        {success && (
+          <p style={{
+            color: '#1b5e20',
+            background: '#e8f5e9',
+            border: '1px solid #c8e6c9',
+            borderRadius: '6px',
+            padding: '8px',
+            fontSize: '12px',
+            margin: '8px 0 0 0'
+          }}>
+            {success}
+          </p>
+        )}
       </form>
     </div>
   );
 };
 
 export default JobCard;
-
